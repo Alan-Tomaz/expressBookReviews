@@ -55,6 +55,12 @@ public_users.get('/', async function (req, res) {
 public_users.get('/isbn/:isbn', async function (req, res) {
   //Write your code here
   try {
+    const isbn = req.params.isbn;
+
+    if (!isbn) {
+      return res.status(404).json({ message: "Please provide an ISBN" });
+    }
+
     let axiosResponse = await axios.post('https://jsonplaceholder.typicode.com/posts', {
       title: 'foo',
       body: 'bar',
@@ -63,9 +69,14 @@ public_users.get('/isbn/:isbn', async function (req, res) {
 
     let getBookByIsbn = new Promise((resolve, reject) => {
       setTimeout(() => {
-        const isbn = req.params.isbn;
+        if (!books) {
+          reject({ message: "No Books Found" })
+        }
+
         const bookFiltered = books[isbn]
-        if (bookFiltered.length > 0) {
+
+
+        if (bookFiltered) {
           resolve(bookFiltered)
         } else {
           reject({ message: "Book doesn't exists" })
@@ -84,6 +95,11 @@ public_users.get('/isbn/:isbn', async function (req, res) {
 public_users.get('/author/:author', async function (req, res) {
   //Write your code here
   try {
+    const author = req.params.author;
+
+    if (!author) {
+      return res.status(404).json({ message: "Please provide an author name" });
+    }
 
     let axiosResponse = await axios.post('https://jsonplaceholder.typicode.com/posts', {
       title: 'foo',
@@ -94,9 +110,11 @@ public_users.get('/author/:author', async function (req, res) {
 
     let getBooksByAuthor = new Promise((resolve, reject) => {
       setTimeout(() => {
-        const author = req.params.author;
         const booksFiltered = [];
 
+        if (!books) {
+          reject({ message: "No Books Found" })
+        }
         for (const [key, value] of Object.entries(books)) {
           if (value.author == author) {
             booksFiltered.push(value);
@@ -122,6 +140,12 @@ public_users.get('/title/:title', async function (req, res) {
   //Write your code here
   try {
 
+    const title = req.params.title;
+
+    if (!title) {
+      return res.status(404).json({ message: "Please provide a title" });
+    }
+
     let axiosResponse = await axios.post('https://jsonplaceholder.typicode.com/posts', {
       title: 'foo',
       body: 'bar',
@@ -130,9 +154,11 @@ public_users.get('/title/:title', async function (req, res) {
 
     let getBooksByTitle = new Promise((resolve, reject) => {
       setTimeout(() => {
-        const title = req.params.title;
         const booksFiltered = [];
 
+        if (!books) {
+          reject({ message: "No Books Found" })
+        }
         for (const [key, value] of Object.entries(books)) {
           if (value.title == title) {
             booksFiltered.push(value);
@@ -145,7 +171,7 @@ public_users.get('/title/:title', async function (req, res) {
         }
       }, 2000)
     })
-    let response = await getBooksByAuthor;
+    let response = await getBooksByTitle;
     return res.status(200).json(response);
   } catch (error) {
     return res.status(404).json(error);

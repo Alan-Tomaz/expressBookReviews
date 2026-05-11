@@ -26,13 +26,20 @@ public_users.get('/', function (req, res) {
   //Write your code here
   let getBooks = new Promise((resolve, reject) => {
     setTimeout(() => {
-      resolve(books)
+      if (books) {
+        resolve(books)
+      } else {
+        reject({ message: "No Books Found" })
+      }
     }, 2000)
   })
 
   getBooks.then((response) => {
     return res.status(200).json(response);
   })
+    .catch((error) => {
+      return res.status(404).json(error);
+    })
 });
 
 // Get book details based on ISBN
@@ -42,16 +49,18 @@ public_users.get('/isbn/:isbn', function (req, res) {
     setTimeout(() => {
       const isbn = req.params.isbn;
       const bookFiltered = books[isbn]
-      resolve(bookFiltered)
+      if (bookFiltered.length > 0) {
+        resolve(bookFiltered)
+      } else {
+        reject({ message: "Book doesn't exists" })
+      }
     }, 2000)
   })
 
   getBookByIsbn.then((response) => {
-    if (response) {
-      return res.status(200).json(response);
-    } else {
-      return res.status(404).json({ message: "Book doesn't exists" });
-    }
+    return res.status(200).json(response);
+  }).catch((error) => {
+    return res.status(404).json(error);
   })
 });
 
@@ -68,16 +77,18 @@ public_users.get('/author/:author', function (req, res) {
           booksFiltered.push(value);
         }
       }
-      resolve(booksFiltered)
+      if (booksFiltered.length > 0) {
+        resolve(booksFiltered)
+      } else {
+        reject({ message: "No Books Found" })
+      }
     }, 2000)
   })
 
   getBooksByAuthor.then((response) => {
-    if (response.length > 0) {
-      return res.status(200).json(response);
-    } else {
-      return res.status(404).json({ message: "No Books Found" });
-    }
+    return res.status(200).json(response);
+  }).catch((error) => {
+    return res.status(404).json(error);
   })
 });
 
@@ -94,16 +105,18 @@ public_users.get('/title/:title', function (req, res) {
           booksFiltered.push(value);
         }
       }
-      resolve(booksFiltered)
+      if (booksFiltered.length > 0) {
+        resolve(booksFiltered)
+      } else {
+        reject({ message: "No Books Found" })
+      }
     }, 2000)
   })
 
   getBooksByTitle.then((response) => {
-    if (response.length > 0) {
-      return res.status(200).json(response);
-    } else {
-      return res.status(404).json({ message: "No Books Found" });
-    }
+    return res.status(200).json(response);
+  }).catch((error) => {
+    return res.status(404).json(error);
   })
 
 });

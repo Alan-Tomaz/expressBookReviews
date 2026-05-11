@@ -26,11 +26,6 @@ public_users.post("/register", (req, res) => {
 public_users.get('/', async function (req, res) {
   //Write your code here
   try {
-    let axiosResponse = await axios.post('https://jsonplaceholder.typicode.com/posts', {
-      title: 'foo',
-      body: 'bar',
-      userId: 1
-    });
 
     let getBooks = new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -60,12 +55,6 @@ public_users.get('/isbn/:isbn', async function (req, res) {
     if (!isbn) {
       return res.status(404).json({ message: "Please provide an ISBN" });
     }
-
-    let axiosResponse = await axios.post('https://jsonplaceholder.typicode.com/posts', {
-      title: 'foo',
-      body: 'bar',
-      userId: 1
-    });
 
     let getBookByIsbn = new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -101,12 +90,6 @@ public_users.get('/author/:author', async function (req, res) {
     if (!author) {
       return res.status(404).json({ message: "Please provide an author name" });
     }
-
-    let axiosResponse = await axios.post('https://jsonplaceholder.typicode.com/posts', {
-      title: 'foo',
-      body: 'bar',
-      userId: 1
-    });
 
 
     let getBooksByAuthor = new Promise((resolve, reject) => {
@@ -148,11 +131,6 @@ public_users.get('/title/:title', async function (req, res) {
       return res.status(404).json({ message: "Please provide a title" });
     }
 
-    let axiosResponse = await axios.post('https://jsonplaceholder.typicode.com/posts', {
-      title: 'foo',
-      body: 'bar',
-      userId: 1
-    });
 
     let getBooksByTitle = new Promise((resolve, reject) => {
       setTimeout(() => {

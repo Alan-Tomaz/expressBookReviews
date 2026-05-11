@@ -71,6 +71,7 @@ public_users.get('/isbn/:isbn', async function (req, res) {
       setTimeout(() => {
         if (!books) {
           reject({ message: "No Books Found" })
+          return;
         }
 
         const bookFiltered = books[isbn]
@@ -114,6 +115,7 @@ public_users.get('/author/:author', async function (req, res) {
 
         if (!books) {
           reject({ message: "No Books Found" })
+          return;
         }
         for (const [key, value] of Object.entries(books)) {
           if (value.author == author) {
@@ -158,6 +160,7 @@ public_users.get('/title/:title', async function (req, res) {
 
         if (!books) {
           reject({ message: "No Books Found" })
+          return;
         }
         for (const [key, value] of Object.entries(books)) {
           if (value.title == title) {
